@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: Constants.statusBarHeight,
     flex: 1,
+    backgroundColor: "white",
     minHeight: Math.round(Dimensions.get("window").height),
   },
 });
