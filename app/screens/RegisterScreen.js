@@ -15,7 +15,7 @@ import {
 import colors from "../config/colors";
 
 const validationSchema = Yup.object().shape({
-  username: Yup.string().required().min(2).label("Username"),
+  username: Yup.string().required().min(2).max(12).label("Username"),
   email: Yup.string().required().email("Invalid Email").label("Email"),
   password: Yup.string().required().min(4).label("Password"),
 });

@@ -8,4 +8,5 @@ export default {
   danger: "#ff5252",
   dark: "#0C0C0C",
   tertiary: "#F6F0E9",
+  grey: "#CACACA",
 };

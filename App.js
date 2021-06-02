@@ -8,6 +8,7 @@ import WelcomeScreen from "./app/screens/WelcomeScreen";
 import RegisterScreen from "./app/screens/RegisterScreen";
 import AppScreen from "./app/screens/AppScreen";
 import UserBubble from "./app/components/UserBubble";
+import ClassCard from "./app/components/ClassCard";
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -17,7 +18,7 @@ export default function App() {
     return <AppLoading />;
   }
 
-  return <UserBubble />;
+  return <AppScreen />;
 }
 
 const styles = StyleSheet.create({
