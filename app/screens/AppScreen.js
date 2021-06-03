@@ -14,6 +14,7 @@ import {
 import colors from "../config/colors";
 import UserBubble from "../components/UserBubble";
 import ClassCard from "../components/ClassCard";
+import AddClassButton from "../components/AddClassButton";
 
 const fakeUsers = [
   { userid: 1, username: "James", image: require("../assets/user1.jpg") },
@@ -67,8 +68,10 @@ const fakeClasses = [
   },
 ];
 
-function AppScreen(props) {
-  const handleSubmit = () => {};
+function AppScreen({ navigation }) {
+  const handleSubmit = () => {
+    navigation.navigate("ClassChat", null);
+  };
 
   return (
     <Screen>
@@ -102,10 +105,12 @@ function AppScreen(props) {
               lastMessageUsername={item.lastMessageUsername}
               containerColor={item.containerColor}
               textColor={item.textColor}
+              onPress={handleSubmit}
             />
           )}
           style={styles.classList}
         />
+        <AddClassButton style={styles.addButton} />
       </View>
     </Screen>
   );
@@ -135,8 +140,14 @@ const styles = StyleSheet.create({
   },
   classList: {
     width: "95%",
-    backgroundColor: "yellow",
+    backgroundColor: "white",
     paddingTop: 30,
+  },
+  addButton: {
+    alignSelf: "flex-start",
+    marginLeft: "2.5%",
+    marginBottom: "25%",
+    marginTop: "2.5%",
   },
 });
 

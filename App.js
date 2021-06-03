@@ -11,6 +11,11 @@ import AppScreen from "./app/screens/AppScreen";
 import UserBubble from "./app/components/UserBubble";
 import ClassCard from "./app/components/ClassCard";
 import AppNavigator from "./app/navigation/AppNavigator";
+import AddClassButton from "./app/components/AddClassButton";
+import ChatBox from "./app/components/ChatBox";
+import UserMessage from "./app/components/UserMessage";
+import ClassChatScreen from "./app/screens/ClassChatScreen";
+import HomeNavigator from "./app/navigation/HomeNavigator";
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -20,5 +25,9 @@ export default function App() {
     return <AppLoading />;
   }
 
-  return <AppScreen />;
+  return (
+    <NavigationContainer>
+      <HomeNavigator />
+    </NavigationContainer>
+  );
 }

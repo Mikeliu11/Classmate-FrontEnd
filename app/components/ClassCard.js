@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Image,
   TouchableWithoutFeedback,
+  TouchableOpacity,
 } from "react-native";
 
 import AppText from "./AppText";
@@ -22,7 +23,11 @@ function ClassCard({
     <>
       <View style={styles.container}>
         <AppText style={styles.classTitle}>{className}</AppText>
-        <TouchableWithoutFeedback onPress={onPress}>
+        <TouchableOpacity
+          onPress={onPress}
+          style={{ width: "100%" }}
+          activeOpacity={0.8}
+        >
           <View
             style={[styles.subContainer, { backgroundColor: containerColor }]}
           >
@@ -36,7 +41,7 @@ function ClassCard({
               {lastMessage}
             </AppText>
           </View>
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
       </View>
     </>
   );

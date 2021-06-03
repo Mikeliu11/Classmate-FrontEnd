@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: "Rancho_400Regular",
     fontSize: 20,
+    borderRadius: 10,
   },
 });
 

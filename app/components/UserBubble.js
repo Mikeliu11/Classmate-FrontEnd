@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   image: {
-    height: 70,
-    width: 70,
+    height: 65,
+    width: 65,
     borderRadius: 35,
   },
 });
