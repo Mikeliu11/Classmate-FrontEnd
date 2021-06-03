@@ -21,7 +21,7 @@ function WelcomeScreen({ navigation }) {
         <AppText style={styles.title}>Classmate</AppText>
         <Line style={styles.line} />
         <AppText style={styles.subtitle}>
-          The app that connects classmates together
+          The app that connect students together
         </AppText>
         <CircleButtonFormless
           title="sign in"

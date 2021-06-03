@@ -1,6 +1,13 @@
 import React from "react";
-import { View, StyleSheet, Image } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Image,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
 import * as Yup from "yup";
+import { Ionicons } from "@expo/vector-icons";
 
 import AppText from "../components/AppText";
 import CircleButton from "../components/forms/CircleButton";
@@ -16,64 +23,75 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().required().min(4).label("Password"),
 });
 
-function RegisterScreen() {
-  const handleSubmit = () => {};
+function RegisterScreen({ navigation }) {
+  const handleSubmit = () => {
+    navigation.navigate("Home");
+  };
 
   return (
     <Screen>
-      <View style={styles.container}>
-        <Image source={require("../assets/logo.png")} style={styles.logo} />
-        <AppText style={styles.title}>Classmate</AppText>
-        <Line style={styles.line} />
-        <AppText style={styles.subtitle}>registration</AppText>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          <Image source={require("../assets/logo.png")} style={styles.logo} />
+          <AppText style={styles.title}>Classmate</AppText>
+          <Line style={styles.line} />
+          <AppText style={styles.subtitle}>registration</AppText>
 
-        <AppForm
-          initialValues={{ username: "", email: "", password: "" }}
-          onSubmit={handleSubmit}
-          validationSchema={validationSchema}
-        >
-          <ErrorMessage
-            error="Invalid email and/or password."
-            visible={false}
-          />
-          <AppFormField
-            autoCapitalize="none"
-            autoCorrect={false}
-            icon="user"
-            name="username"
-            placeholder=" Username"
-            textContentType="username"
-            containerStyle={styles.inputContainer}
-          />
-          <AppFormField
-            autoCapitalize="none"
-            autoCorrect={false}
-            icon="email"
-            keyboardType="email-address"
-            name="email"
-            placeholder="UWaterloo Email"
-            textContentType="emailAddress"
-            containerStyle={styles.inputContainer}
-          />
-          <AppFormField
-            autoCapitalize="none"
-            autoCorrect={false}
-            icon="lock"
-            name="password"
-            placeholder="Password"
-            secureTextEntry
-            textContentType="password"
-            containerStyle={styles.inputContainer}
-          />
-          <View style={styles.buttonContainer}>
-            <CircleButton
-              title="continue"
-              style={styles.button}
-              textStyle={styles.buttonText}
+          <AppForm
+            initialValues={{ username: "", email: "", password: "" }}
+            onSubmit={handleSubmit}
+            validationSchema={validationSchema}
+          >
+            <ErrorMessage
+              error="Invalid email and/or password."
+              visible={false}
             />
-          </View>
-        </AppForm>
-      </View>
+            <AppFormField
+              autoCapitalize="none"
+              autoCorrect={false}
+              icon="user"
+              name="username"
+              placeholder=" Username"
+              textContentType="username"
+              containerStyle={styles.inputContainer}
+            />
+            <AppFormField
+              autoCapitalize="none"
+              autoCorrect={false}
+              icon="email"
+              keyboardType="email-address"
+              name="email"
+              placeholder="UWaterloo Email"
+              textContentType="emailAddress"
+              containerStyle={styles.inputContainer}
+            />
+            <AppFormField
+              autoCapitalize="none"
+              autoCorrect={false}
+              icon="lock"
+              name="password"
+              placeholder="Password"
+              secureTextEntry
+              textContentType="password"
+              containerStyle={styles.inputContainer}
+            />
+            <View style={styles.buttonContainer}>
+              <CircleButton
+                title="continue"
+                style={styles.button}
+                textStyle={styles.buttonText}
+              />
+            </View>
+          </AppForm>
+          <TouchableWithoutFeedback
+            onPress={() => navigation.navigate("Welcome")}
+          >
+            <View style={styles.backButton}>
+              <Ionicons name="chevron-back-sharp" size={38} color="black" />
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
+      </TouchableWithoutFeedback>
     </Screen>
   );
 }
@@ -97,6 +115,12 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 25,
     marginTop: 10,
+  },
+  backButton: {
+    alignSelf: "flex-start",
+    bottom: 20,
+    left: 20,
+    position: "absolute",
   },
   button: {
     marginBottom: 20,

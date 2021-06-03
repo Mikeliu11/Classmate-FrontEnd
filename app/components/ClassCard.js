@@ -32,12 +32,12 @@ function ClassCard({
             style={[styles.subContainer, { backgroundColor: containerColor }]}
           >
             <Image style={styles.image} source={lastMessageUserImage} />
-            <AppText style={{ textColor: textColor }}>
+            <AppText style={{ color: textColor }}>
               {lastMessageUsername}:{" "}
             </AppText>
             <AppText
               style={styles.inLineText}
-              style={{ textColor: textColor }}
+              style={{ color: textColor }}
               numberOfLines={1}
             >
               {lastMessage}
