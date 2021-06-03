@@ -4,18 +4,19 @@ import {
   StyleSheet,
   Image,
   TouchableWithoutFeedback,
+  TouchableOpacity,
 } from "react-native";
 
 import AppText from "./AppText";
 
 function UserBubble({ username, image, onPress }) {
   return (
-    <TouchableWithoutFeedback onPress={onPress}>
+    <TouchableOpacity onPress={onPress} activeOpacity={0.8}>
       <View style={styles.container}>
         <Image style={styles.image} source={image} />
         <AppText>{username}</AppText>
       </View>
-    </TouchableWithoutFeedback>
+    </TouchableOpacity>
   );
 }
 

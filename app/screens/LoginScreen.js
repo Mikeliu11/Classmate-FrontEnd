@@ -1,5 +1,11 @@
 import React from "react";
-import { View, StyleSheet, Image } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Image,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import * as Yup from "yup";
 
 import AppText from "../components/AppText";

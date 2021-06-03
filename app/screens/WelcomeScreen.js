@@ -1,12 +1,19 @@
 import React from "react";
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import AppText from "../components/AppText";
 import CircleButtonFormless from "../components/CircleButtonFormless";
 import CircleButton from "../components/forms/CircleButton";
 import Line from "../components/Line";
 import Screen from "../components/Screen";
 
-function WelcomeScreen(props) {
+function WelcomeScreen({ navigation }) {
+  const handleLogin = () => {
+    navigation.navigate("Login");
+  };
+  const handleRegister = () => {
+    navigation.navigate("Register");
+  };
+
   return (
     <Screen>
       <View style={styles.container}>
@@ -20,10 +27,13 @@ function WelcomeScreen(props) {
           title="sign in"
           style={styles.button}
           textStyle={styles.buttonText}
+          handleSubmit={handleLogin}
         />
-        <AppText style={styles.registerText}>
-          register with my uwaterloo email
-        </AppText>
+        <TouchableOpacity onPress={handleRegister} activeOpacity={0.8}>
+          <AppText style={styles.registerText}>
+            register with my uwaterloo email
+          </AppText>
+        </TouchableOpacity>
       </View>
     </Screen>
   );

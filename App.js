@@ -16,6 +16,7 @@ import ChatBox from "./app/components/ChatBox";
 import UserMessage from "./app/components/UserMessage";
 import ClassChatScreen from "./app/screens/ClassChatScreen";
 import HomeNavigator from "./app/navigation/HomeNavigator";
+import AuthNavigator from "./app/navigation/AuthNavigation";
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -26,8 +27,9 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <HomeNavigator />
-    </NavigationContainer>
+    <RegisterScreen />
+    // <NavigationContainer>
+    //   <AuthNavigator />
+    // </NavigationContainer>
   );
 }

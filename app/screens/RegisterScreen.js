@@ -6,13 +6,9 @@ import AppText from "../components/AppText";
 import CircleButton from "../components/forms/CircleButton";
 import Line from "../components/Line";
 import Screen from "../components/Screen";
-import {
-  ErrorMessage,
-  AppForm,
-  AppFormField,
-  SubmitButton,
-} from "../components/forms";
+import { ErrorMessage, AppForm, AppFormField } from "../components/forms";
 import colors from "../config/colors";
+import HomeNavigator from "../navigation/HomeNavigator";
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required().min(2).max(12).label("Username"),
@@ -20,7 +16,7 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().required().min(4).label("Password"),
 });
 
-function RegisterScreen(props) {
+function RegisterScreen() {
   const handleSubmit = () => {};
 
   return (
@@ -36,10 +32,7 @@ function RegisterScreen(props) {
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
-          <ErrorMessage
-            error="Invalid email and/or password."
-            visible={false}
-          />
+          <ErrorMessage error="Invalid email and/or password." visible={true} />
           <AppFormField
             autoCapitalize="none"
             autoCorrect={false}
