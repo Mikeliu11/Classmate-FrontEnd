@@ -32,7 +32,10 @@ function RegisterScreen() {
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
-          <ErrorMessage error="Invalid email and/or password." visible={true} />
+          <ErrorMessage
+            error="Invalid email and/or password."
+            visible={false}
+          />
           <AppFormField
             autoCapitalize="none"
             autoCorrect={false}
@@ -101,7 +104,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 30,
-    color: colors.light,
+    color: colors.tertiary,
   },
   buttonContainer: {
     flex: 1,

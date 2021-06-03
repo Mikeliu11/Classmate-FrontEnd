@@ -3,7 +3,7 @@ import { Text, StyleSheet } from "react-native";
 
 function AppText({ textFont, textColor, children, style, ...otherProps }) {
   return (
-    <Text {...otherProps} style={[styles.text, style, { color: textColor }]}>
+    <Text {...otherProps} style={[styles.text, style]}>
       {children}
     </Text>
   );

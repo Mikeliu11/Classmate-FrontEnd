@@ -26,10 +26,5 @@ export default function App() {
     return <AppLoading />;
   }
 
-  return (
-    <RegisterScreen />
-    // <NavigationContainer>
-    //   <AuthNavigator />
-    // </NavigationContainer>
-  );
+  return <RegisterScreen></RegisterScreen>;
 }
