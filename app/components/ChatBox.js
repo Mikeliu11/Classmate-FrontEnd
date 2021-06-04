@@ -8,12 +8,12 @@ function ChatBox({ data, style }) {
       showsVerticalScrollIndicator={false}
       inverted
       data={data}
-      keyExtractor={(data) => data.username.toString()}
+      keyExtractor={(data) => data.message_id.toString()}
       renderItem={({ item }) => (
         <UserMessage
           message={item.message}
-          username={item.username}
-          image={item.image}
+          username={item.name}
+          image={require("../assets/user2.jpg")}
         />
       )}
       style={[styles.container, style]}

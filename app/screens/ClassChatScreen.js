@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -16,6 +16,9 @@ import { AppForm, AppFormField } from "../components/forms";
 import AppButton from "../components/AppButton";
 import SendMessageButton from "../components/SendMessageButton";
 import AppText from "../components/AppText";
+import courseApi from "../api/course";
+import useApi from "../hooks/useApi";
+import useAuth from "../auth/useAuth";
 
 const fakeMessages = [
   {
@@ -38,6 +41,13 @@ const fakeMessages = [
 
 function ClassChatScreen({ route, navigation }) {
   const data = route.params;
+
+  const getCoursesApi = useApi(courseApi.getMessages);
+
+  useEffect(() => {
+    getCoursesApi.request(data.courseName);
+  }, []);
+
   const handleSubmit = () => {};
 
   return (
@@ -50,11 +60,12 @@ function ClassChatScreen({ route, navigation }) {
           <TouchableWithoutFeedback onPress={() => navigation.navigate("Home")}>
             <Ionicons name="chevron-back-sharp" size={32} color="black" />
           </TouchableWithoutFeedback>
-          <AppText style={styles.titleText}>math233</AppText>
+          <AppText style={styles.titleText}>{data.courseName}</AppText>
         </View>
         <Line style={styles.line} />
+
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <ChatBox data={fakeMessages} style={styles.chatContainer} />
+          <ChatBox data={getCoursesApi.data} style={styles.chatContainer} />
         </TouchableWithoutFeedback>
 
         <View style={styles.bottomContainer}>

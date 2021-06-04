@@ -44,10 +44,6 @@ function AppScreen({ navigation }) {
     getCoursesApi.request();
   }, []);
 
-  const handleSubmit = () => {
-    navigation.navigate("ClassChat", null);
-  };
-
   return (
     <Screen>
       <View style={styles.container}>
@@ -83,7 +79,7 @@ function AppScreen({ navigation }) {
               className={item.courseName}
               containerColor={colors.grey}
               textColor={item.black}
-              onPress={handleSubmit}
+              onPress={() => navigation.navigate("ClassChat", item)}
             />
           )}
           style={styles.classList}

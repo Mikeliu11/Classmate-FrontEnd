@@ -33,8 +33,9 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   nameText: {
-    left: "14%",
-    fontSize: 10,
+    left: "13%",
+    fontSize: 14,
+    // backgroundColor: "yellow",
     // fontFamily: "Roboto",
   },
   subContainer: {
@@ -44,8 +45,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   image: {
-    height: 40,
-    width: 40,
+    height: 30,
+    width: 30,
     borderRadius: 35,
     marginHorizontal: 5,
   },
