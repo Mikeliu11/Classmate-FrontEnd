@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import AppLoading from "expo-app-loading";
 import { useFonts, Rancho_400Regular } from "@expo-google-fonts/rancho";
@@ -17,18 +17,38 @@ import UserMessage from "./app/components/UserMessage";
 import ClassChatScreen from "./app/screens/ClassChatScreen";
 import HomeNavigator from "./app/navigation/HomeNavigator";
 import AuthNavigator from "./app/navigation/AuthNavigation";
+import AuthContext from "./app/auth/context";
+import authStorage from "./app/auth/storage";
+import OfflineNotice from "./app/components/OfflineNotice";
 
 export default function App() {
   let [fontsLoaded] = useFonts({
     Rancho_400Regular,
   });
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  }
+
+  const [user, setUser] = useState();
+  const [isReady, setIsReady] = useState(false);
+
+  const restoreUser = async () => {
+    const user = await authStorage.getUser();
+    if (user) setUser(user);
+  };
+
+  if (!isReady || !fontsLoaded)
+    return (
+      <AppLoading
+        startAsync={restoreUser}
+        onFinish={() => setIsReady(true)}
+        onError={console.warn}
+      />
+    );
 
   return (
-    <NavigationContainer>
-      <AuthNavigator />
-    </NavigationContainer>
+    <AuthContext.Provider value={{ user, setUser }}>
+      <OfflineNotice />
+      <NavigationContainer>
+        {user ? <HomeNavigator /> : <AuthNavigator />}
+      </NavigationContainer>
+    </AuthContext.Provider>
   );
 }

@@ -1,6 +1,14 @@
-import React from "react";
-import { View, StyleSheet, Image, FlatList } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  StyleSheet,
+  Image,
+  FlatList,
+  ActivityIndicator,
+  TouchableWithoutFeedback,
+} from "react-native";
 import * as Yup from "yup";
+import { Ionicons } from "@expo/vector-icons";
 
 import AppText from "../components/AppText";
 import Line from "../components/Line";
@@ -15,6 +23,9 @@ import colors from "../config/colors";
 import UserBubble from "../components/UserBubble";
 import ClassCard from "../components/ClassCard";
 import AddClassButton from "../components/AddClassButton";
+import courseApi from "../api/course";
+import useApi from "../hooks/useApi";
+import useAuth from "../auth/useAuth";
 
 const fakeUsers = [
   { userid: 1, username: "James", image: require("../assets/user1.jpg") },
@@ -25,50 +36,14 @@ const fakeUsers = [
   { userid: 6, username: "Mike", image: require("../assets/user6.jpg") },
 ];
 
-const fakeClasses = [
-  {
-    classid: 1,
-    className: "math136",
-    classCapacity: 122,
-    lastMessage: "I can't wait to see what that's about.",
-    lastMessageUsername: "Harry",
-    lastMessageUserImage: require("../assets/user2.jpg"),
-    containerColor: colors.primary,
-    textColor: colors.white,
-  },
-  {
-    classid: 2,
-    className: "econ101",
-    classCapacity: 80,
-    lastMessage: "Tomorrow's weather is going to be great",
-    lastMessageUsername: "Joe",
-    lastMessageUserImage: require("../assets/user4.jpg"),
-    containerColor: colors.primary,
-    textColor: colors.white,
-  },
-  {
-    classid: 3,
-    className: "cs230",
-    classCapacity: 45,
-    lastMessage: "They opened up a new Tims down the street, amazing!",
-    lastMessageUsername: "Harry",
-    lastMessageUserImage: require("../assets/user2.jpg"),
-    containerColor: colors.secondary,
-    textColor: colors.black,
-  },
-  {
-    classid: 4,
-    className: "co250",
-    classCapacity: 26,
-    lastMessage: "Cool stuff huh.",
-    lastMessageUsername: "Rebecca",
-    lastMessageUserImage: require("../assets/user5.jpg"),
-    containerColor: colors.primary,
-    textColor: colors.white,
-  },
-];
-
 function AppScreen({ navigation }) {
+  const getCoursesApi = useApi(courseApi.getCourses);
+  const { user, logout } = useAuth();
+
+  useEffect(() => {
+    getCoursesApi.request();
+  }, []);
+
   const handleSubmit = () => {
     navigation.navigate("ClassChat", null);
   };
@@ -93,24 +68,36 @@ function AppScreen({ navigation }) {
           />
         </View>
         <Line style={styles.line} />
+        <ActivityIndicator
+          animating={getCoursesApi.loading}
+          size="large"
+          color="grey"
+          style={{ top: 200, position: "absolute" }}
+        />
+
         <FlatList
-          data={fakeClasses}
-          keyExtractor={(fakeClasses) => fakeClasses.classid.toString()}
+          data={getCoursesApi.data}
+          keyExtractor={(course) => course.courseName.toString()}
           renderItem={({ item }) => (
             <ClassCard
-              className={item.className}
-              classCapacity={item.classCapacity}
-              lastMessage={item.lastMessage}
-              lastMessageUserImage={item.lastMessageUserImage}
-              lastMessageUsername={item.lastMessageUsername}
-              containerColor={item.containerColor}
-              textColor={item.textColor}
+              className={item.courseName}
+              containerColor={colors.grey}
+              textColor={item.black}
               onPress={handleSubmit}
             />
           )}
           style={styles.classList}
         />
+
         <AddClassButton style={styles.addButton} />
+        <TouchableWithoutFeedback onPress={() => logout()}>
+          <Ionicons
+            name="exit"
+            size={35}
+            color={"grey"}
+            style={{ position: "absolute", right: 22, top: 10 }}
+          />
+        </TouchableWithoutFeedback>
       </View>
     </Screen>
   );
@@ -140,8 +127,8 @@ const styles = StyleSheet.create({
   },
   classList: {
     width: "95%",
-    backgroundColor: "white",
-    paddingTop: 30,
+    // backgroundColor: "yellow",
+    paddingTop: 20,
   },
   addButton: {
     alignSelf: "flex-start",

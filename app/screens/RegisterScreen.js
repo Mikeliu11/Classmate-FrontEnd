@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   StyleSheet,
@@ -15,7 +15,9 @@ import Line from "../components/Line";
 import Screen from "../components/Screen";
 import { ErrorMessage, AppForm, AppFormField } from "../components/forms";
 import colors from "../config/colors";
-import HomeNavigator from "../navigation/HomeNavigator";
+import useAuth from "../auth/useAuth";
+import usersApi from "../api/users";
+import authApi from "../api/auth";
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required().min(2).max(12).label("Username"),
@@ -24,8 +26,26 @@ const validationSchema = Yup.object().shape({
 });
 
 function RegisterScreen({ navigation }) {
-  const handleSubmit = () => {
-    navigation.navigate("Home");
+  const auth = useAuth();
+  const [error, setError] = useState();
+
+  const handleSubmit = async (userInfo) => {
+    const result = await usersApi.register(userInfo);
+
+    if (!result.ok) {
+      if (result.data) setError(result.data.error);
+      else {
+        setError("An unexpected error occurred.");
+        console.log(result);
+      }
+      return;
+    }
+
+    const { data: authToken } = await authApi.login(
+      userInfo.email,
+      userInfo.password
+    );
+    auth.login(authToken);
   };
 
   return (
@@ -118,12 +138,12 @@ const styles = StyleSheet.create({
   },
   backButton: {
     alignSelf: "flex-start",
-    bottom: 20,
+    top: 148,
     left: 20,
     position: "absolute",
   },
   button: {
-    marginBottom: 20,
+    marginBottom: 50,
     backgroundColor: colors.primary,
   },
   buttonText: {

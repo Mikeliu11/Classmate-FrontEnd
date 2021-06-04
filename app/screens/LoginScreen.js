@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   StyleSheet,
@@ -19,6 +19,8 @@ import {
   CircleButton,
 } from "../components/forms";
 import colors from "../config/colors";
+import authApi from "../api/auth";
+import useAuth from "../auth/useAuth";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email("Invalid Email").label("Email"),
@@ -26,8 +28,15 @@ const validationSchema = Yup.object().shape({
 });
 
 function LoginScreen({ navigation }) {
-  const handleSubmit = () => {
-    navigation.navigate("Home");
+  const auth = useAuth();
+
+  const [loginFailed, setLoginFailed] = useState(false);
+
+  const handleSubmit = async ({ email, password }) => {
+    const result = await authApi.login(email, password);
+    if (!result.ok) return setLoginFailed(true);
+    setLoginFailed(false);
+    auth.login(result.data);
   };
 
   return (
@@ -38,7 +47,10 @@ function LoginScreen({ navigation }) {
           <AppText style={styles.title}>Classmate</AppText>
           <Line style={styles.line} />
           <AppText style={styles.subtitle}>welcome back</AppText>
-
+          <ErrorMessage
+            error="Invalid email and/or password."
+            visible={loginFailed}
+          />
           <AppForm
             initialValues={{ email: "", password: "" }}
             onSubmit={handleSubmit}
@@ -113,12 +125,13 @@ const styles = StyleSheet.create({
   },
   backButton: {
     alignSelf: "flex-start",
-    bottom: 20,
+    top: 148,
     left: 20,
     position: "absolute",
   },
   button: {
     backgroundColor: colors.primary,
+    marginBottom: 50,
   },
   buttonText: {
     fontSize: 30,

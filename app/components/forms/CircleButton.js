@@ -20,11 +20,11 @@ function CircleButton({ title, style, textStyle, ...otherProps }) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.secondary,
-    width: 140,
-    height: 140,
+    width: 180,
+    height: 80,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 70,
+    borderRadius: 30,
   },
 });
 

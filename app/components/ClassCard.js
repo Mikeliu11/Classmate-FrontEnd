@@ -9,16 +9,7 @@ import {
 
 import AppText from "./AppText";
 
-function ClassCard({
-  className,
-  classCapacity,
-  lastMessage,
-  lastMessageUsername,
-  lastMessageUserImage,
-  containerColor,
-  textColor,
-  onPress,
-}) {
+function ClassCard({ className, containerColor, textColor, onPress }) {
   return (
     <>
       <View style={styles.container}>
@@ -31,16 +22,17 @@ function ClassCard({
           <View
             style={[styles.subContainer, { backgroundColor: containerColor }]}
           >
-            <Image style={styles.image} source={lastMessageUserImage} />
-            <AppText style={{ color: textColor }}>
-              {lastMessageUsername}:{" "}
-            </AppText>
+            <Image
+              style={styles.image}
+              source={require("../assets/user1.jpg")}
+            />
+            <AppText style={{ color: textColor }}>User: </AppText>
             <AppText
               style={styles.inLineText}
               style={{ color: textColor }}
               numberOfLines={1}
             >
-              {lastMessage}
+              Last user message
             </AppText>
           </View>
         </TouchableOpacity>
@@ -59,14 +51,14 @@ const styles = StyleSheet.create({
   },
   subContainer: {
     flexDirection: "row",
-    backgroundColor: "purple",
+    // backgroundColor: "purple",
     alignItems: "center",
-    borderRadius: 20,
+    borderRadius: 10,
     height: 55,
     width: "100%",
   },
   classTitle: {
-    marginLeft: 10,
+    marginLeft: 12,
     fontSize: 22,
   },
   image: {
