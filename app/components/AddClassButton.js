@@ -1,14 +1,18 @@
 import AppLoading from "expo-app-loading";
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import colors from "../config/colors";
+import { useFormikContext } from "formik";
 
 function AddClassButton({ style }) {
+  const { handleSubmit } = useFormikContext();
   return (
-    <View style={[styles.container, style]}>
-      <MaterialIcons name="add" size={24} color="black" />
-    </View>
+    <TouchableOpacity onPress={handleSubmit} activeOpacity={0.6}>
+      <View style={[styles.container, style]}>
+        <MaterialIcons name="add" size={24} color="black" />
+      </View>
+    </TouchableOpacity>
   );
 }
 

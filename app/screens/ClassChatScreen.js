@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -42,13 +42,20 @@ const fakeMessages = [
 function ClassChatScreen({ route, navigation }) {
   const data = route.params;
 
-  const getCoursesApi = useApi(courseApi.getMessages);
+  const getMessageApi = useApi(courseApi.getMessages);
+  const sendMessageApi = useApi(courseApi.sendMessages);
 
   useEffect(() => {
-    getCoursesApi.request(data.courseName);
+    const interval = setInterval(() => {
+      getMessageApi.request(data.courseName);
+    }, 1000);
+    return () => clearInterval(interval);
   }, []);
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (message, { resetForm }) => {
+    resetForm();
+    sendMessageApi.request(data.courseName, message.message);
+  };
 
   return (
     <Screen>
@@ -65,7 +72,7 @@ function ClassChatScreen({ route, navigation }) {
         <Line style={styles.line} />
 
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <ChatBox data={getCoursesApi.data} style={styles.chatContainer} />
+          <ChatBox data={getMessageApi.data} style={styles.chatContainer} />
         </TouchableWithoutFeedback>
 
         <View style={styles.bottomContainer}>

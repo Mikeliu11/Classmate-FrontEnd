@@ -33,7 +33,7 @@ function AppTextInput({ containerStyle, icon, width = "90%", ...otherProps }) {
       )}
       <TextInput
         placeholderTextColor={colors.medium}
-        style={{ flex: 1 }}
+        style={{ flex: 1, fontSize: 14 }}
         {...otherProps}
       />
     </View>
@@ -42,7 +42,7 @@ function AppTextInput({ containerStyle, icon, width = "90%", ...otherProps }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.light,
+    backgroundColor: colors.grey,
     borderRadius: 25,
     flexDirection: "row",
     padding: 15,

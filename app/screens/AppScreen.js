@@ -6,6 +6,9 @@ import {
   FlatList,
   ActivityIndicator,
   TouchableWithoutFeedback,
+  TextInput,
+  KeyboardAvoidingView,
+  Keyboard,
 } from "react-native";
 import * as Yup from "yup";
 import { Ionicons } from "@expo/vector-icons";
@@ -26,6 +29,8 @@ import AddClassButton from "../components/AddClassButton";
 import courseApi from "../api/course";
 import useApi from "../hooks/useApi";
 import useAuth from "../auth/useAuth";
+import SendMessageButton from "../components/SendMessageButton";
+import WelcomeScreen from "./WelcomeScreen";
 
 const fakeUsers = [
   { userid: 1, username: "James", image: require("../assets/user1.jpg") },
@@ -38,11 +43,21 @@ const fakeUsers = [
 
 function AppScreen({ navigation }) {
   const getCoursesApi = useApi(courseApi.getCourses);
+  const joinCourse = useApi(courseApi.joinCourse);
+
   const { user, logout } = useAuth();
 
   useEffect(() => {
     getCoursesApi.request();
   }, []);
+
+  const handleSubmit = async (text, { resetForm }) => {
+    Keyboard.dismiss();
+    resetForm();
+    if (text == "") return;
+    await joinCourse.request(text.message);
+    await getCoursesApi.request();
+  };
 
   return (
     <Screen>
@@ -84,9 +99,30 @@ function AppScreen({ navigation }) {
           )}
           style={styles.classList}
         />
+        {joinCourse.error && (
+          <AppText style={{ color: "red" }}>
+            {" "}
+            Class does not exist or you already have joined
+          </AppText>
+        )}
+        <View style={styles.bottomContainer}>
+          <AppForm initialValues={{ message: "" }} onSubmit={handleSubmit}>
+            <AppFormField
+              autoCapitalize="none"
+              autoCorrect={false}
+              name="message"
+              placeholder="Join an existing class"
+              containerStyle={styles.inputContainer}
+            />
+            <AddClassButton style={styles.addButton} />
+          </AppForm>
+        </View>
 
-        <AddClassButton style={styles.addButton} />
-        <TouchableWithoutFeedback onPress={() => logout()}>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            logout();
+          }}
+        >
           <Ionicons
             name="exit"
             size={35}
@@ -126,11 +162,20 @@ const styles = StyleSheet.create({
     // backgroundColor: "yellow",
     paddingTop: 20,
   },
-  addButton: {
-    alignSelf: "flex-start",
-    marginLeft: "2.5%",
-    marginBottom: "25%",
-    marginTop: "2.5%",
+  addButton: {},
+  bottomContainer: {
+    flexDirection: "row",
+    // backgroundColor: "yellow",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute",
+    bottom: 300,
+  },
+  inputContainer: {
+    width: "60%",
+    marginTop: 10,
+    marginRight: 10,
   },
 });
 
