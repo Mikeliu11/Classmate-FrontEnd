@@ -10,7 +10,7 @@ function AddClassButton({ style }) {
   return (
     <TouchableOpacity onPress={handleSubmit} activeOpacity={0.6}>
       <View style={[styles.container, style]}>
-        <MaterialIcons name="add" size={24} color="black" />
+        <MaterialIcons name="add" size={20} color="black" />
       </View>
     </TouchableOpacity>
   );
@@ -18,10 +18,10 @@ function AddClassButton({ style }) {
 
 const styles = StyleSheet.create({
   container: {
-    height: 60,
-    width: 60,
+    height: 50,
+    width: 50,
     borderRadius: 15,
-    backgroundColor: colors.grey,
+    backgroundColor: colors.light,
     justifyContent: "center",
     alignItems: "center",
   },

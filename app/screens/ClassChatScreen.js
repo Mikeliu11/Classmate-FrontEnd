@@ -6,6 +6,7 @@ import {
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
+  ActivityIndicator,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -20,37 +21,23 @@ import courseApi from "../api/course";
 import useApi from "../hooks/useApi";
 import useAuth from "../auth/useAuth";
 
-const fakeMessages = [
-  {
-    username: "Charley",
-    message:
-      "Yep, look at this very long text and how well this chat bubble component handles this long sentence with no weird issues",
-    image: require("../assets/user1.jpg"),
-  },
-  {
-    username: "Hanna",
-    message: "This is the best app ever right?",
-    image: require("../assets/user2.jpg"),
-  },
-  {
-    username: "Rebecca",
-    message: "I love react native",
-    image: require("../assets/user3.jpg"),
-  },
-];
-
 function ClassChatScreen({ route, navigation }) {
+  const { user } = useAuth();
+
   const data = route.params;
 
   const getMessageApi = useApi(courseApi.getMessages);
   const sendMessageApi = useApi(courseApi.sendMessages);
-
+  // console.log(user);
   useEffect(() => {
     const interval = setInterval(() => {
       getMessageApi.request(data.courseName);
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
+    }, 500);
+    return () => {
+      clearInterval(interval);
+      getMessageApi.data = [];
+    };
+  });
 
   const handleSubmit = async (message, { resetForm }) => {
     resetForm();
@@ -71,8 +58,15 @@ function ClassChatScreen({ route, navigation }) {
         </View>
         <Line style={styles.line} />
 
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <ChatBox data={getMessageApi.data} style={styles.chatContainer} />
+        <TouchableWithoutFeedback
+          onPress={Keyboard.dismiss}
+          style={{ zIndex: 1, backgroundColor: "white" }}
+        >
+          <ChatBox
+            data={getMessageApi.data}
+            style={styles.chatContainer}
+            user_id={user.sub}
+          />
         </TouchableWithoutFeedback>
 
         <View style={styles.bottomContainer}>

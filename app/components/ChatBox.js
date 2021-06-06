@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet, FlatList } from "react-native";
 import UserMessage from "./UserMessage";
 
-function ChatBox({ data, style }) {
+function ChatBox({ data, style, user_id }) {
   return (
     <FlatList
       showsVerticalScrollIndicator={false}
@@ -13,7 +13,8 @@ function ChatBox({ data, style }) {
         <UserMessage
           message={item.message}
           username={item.name}
-          image={require("../assets/user2.jpg")}
+          user_id={user_id}
+          sender_id={item.sender_id}
         />
       )}
       style={[styles.container, style]}

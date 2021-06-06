@@ -24,7 +24,7 @@ function ClassCard({ className, containerColor, textColor, onPress }) {
           >
             <Image
               style={styles.image}
-              source={require("../assets/user1.jpg")}
+              source={require("../assets/user4.jpg")}
             />
             <AppText style={{ color: textColor }}>User: </AppText>
             <AppText

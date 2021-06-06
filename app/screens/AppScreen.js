@@ -9,10 +9,13 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Keyboard,
+  Platform,
 } from "react-native";
 import * as Yup from "yup";
 import { Ionicons } from "@expo/vector-icons";
-
+import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import AppText from "../components/AppText";
 import Line from "../components/Line";
 import Screen from "../components/Screen";
@@ -92,20 +95,24 @@ function AppScreen({ navigation }) {
           renderItem={({ item }) => (
             <ClassCard
               className={item.courseName}
-              containerColor={colors.grey}
-              textColor={item.black}
+              containerColor={colors.primary}
+              textColor={colors.white}
               onPress={() => navigation.navigate("ClassChat", item)}
             />
           )}
           style={styles.classList}
         />
         {joinCourse.error && (
-          <AppText style={{ color: "red" }}>
+          <AppText style={{ color: "red", fontSize: 15 }}>
             {" "}
-            Class does not exist or you already have joined
+            Class does not exist or you have already have joined
           </AppText>
         )}
-        <View style={styles.bottomContainer}>
+        <KeyboardAvoidingView
+          behavior={"padding"}
+          style={styles.bottomContainer}
+          keyboardVerticalOffset={Platform.OS == "ios" ? 40 : 20}
+        >
           <AppForm initialValues={{ message: "" }} onSubmit={handleSubmit}>
             <AppFormField
               autoCapitalize="none"
@@ -116,8 +123,19 @@ function AppScreen({ navigation }) {
             />
             <AddClassButton style={styles.addButton} />
           </AppForm>
-        </View>
+        </KeyboardAvoidingView>
 
+        <Line style={styles.line2} />
+        <View style={styles.navContainer}>
+          <AntDesign name="search1" size={25} color="black" style={{}} />
+          <MaterialIcons
+            name="home"
+            size={27}
+            color="black"
+            style={{ marginHorizontal: 100 }}
+          />
+          <MaterialCommunityIcons name="account" size={28} color="black" />
+        </View>
         <TouchableWithoutFeedback
           onPress={() => {
             logout();
@@ -126,7 +144,7 @@ function AppScreen({ navigation }) {
           <Ionicons
             name="exit"
             size={35}
-            color={"grey"}
+            color={colors.grey}
             style={{ position: "absolute", right: 22, top: 10 }}
           />
         </TouchableWithoutFeedback>
@@ -147,6 +165,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   line: { marginTop: 10 },
+  line2: { marginBottom: 20 },
   subtitle: {
     fontSize: 25,
     marginTop: 10,
@@ -170,12 +189,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     position: "absolute",
-    bottom: 300,
+    bottom: 70,
+    marginBottom: 2,
   },
   inputContainer: {
     width: "60%",
     marginTop: 10,
     marginRight: 10,
+    backgroundColor: colors.light,
+  },
+  navContainer: {
+    // backgroundColor: "yellow",
+    flexDirection: "row",
+    width: "100%",
+    paddingHorizontal: 80,
+    justifyContent: "center",
+    marginBottom: 10,
   },
 });
 

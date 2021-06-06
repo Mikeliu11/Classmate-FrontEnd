@@ -8,7 +8,7 @@ function Line({ children, style, ...otherProps }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.medium,
     height: 3,
     width: "95%",
     borderRadius: 100,

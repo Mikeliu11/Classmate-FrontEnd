@@ -6,6 +6,7 @@ const apiClient = create({
   baseURL:
     "http://classmatebackend-env.eba-uzmg53uz.us-east-1.elasticbeanstalk.com/",
   // "http://classmatebackend-env.eba-uzmg53uz.us-east-1.elasticbeanstalk.com/",
+  // "http://192.168.0.143:5000/",
 });
 
 apiClient.addAsyncRequestTransform(async (request) => {
